@@ -1,0 +1,15 @@
+{
+  "name": "session_imitation",
+  "version": "0.0.1",
+  "description": "Simple imitation of game-session based on socket.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Egor Dorofeichik <sa1rac.work@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^4.5.1",
+    "uuid": "^8.3.2"
+  }
+}

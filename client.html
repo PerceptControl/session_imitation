@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="searchButton">поиск</button>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script>
+      let userID = window.sessionStorage.getItem('userID')
+      let socket = io('ws://127.0.0.1:3000', {
+        transports: ['websocket'],
+        autoConnect: false,
+      })
+
+      if (userID) socket.auth = { id: userID }
+
+      socket.connect()
+
+      socket.on('connect_error', (err) => {
+        console.log(err.message) // prints the message associated with the error
+      })
+
+      document.querySelector('#searchButton').addEventListener('click', () => {
+        socket.emit('searchGame')
+      })
+
+      socket.on('connect', () => {
+        console.log('connection')
+      })
+
+      socket.on('userID', (data) => {
+        console.log('Get new ID')
+        window.sessionStorage.setItem('userID', data.id)
+      })
+
+      socket.on('joined', (data) => {
+        window.sessionStorage.setItem('session', { socket: socket.id, sessionID: data.id })
+        console.log(`Joined session#${data.id}`)
+      })
+    </script>
+  </body>
+</html>
